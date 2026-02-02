@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy 21st Birthday Mudasir 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script&display=swap" rel="stylesheet">
+
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+body {
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  overflow:hidden;
+}
+
+/* Card */
+.card {
+  position: relative;
+  width: 90%;
+  max-width: 380px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 30px 20px;
+  text-align:center;
+  color: orangered;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  cursor:pointer;
+  transition: transform 0.5s;
+}
+
+.card h1 { font-size:2rem; margin-bottom:10px; font-weight:600; }
+.card h2 { font-size:1.3rem; margin-bottom:20px; font-weight:400; }
+.card p { font-size:1rem; line-height:1.6; margin-bottom:25px; }
+.card .emoji { font-size:2rem; margin-bottom:20px; animation:bounce 2s infinite; }
+.card .heart { font-size:2.2rem; animation:pulse 1.5s infinite; }
+.card .from { font-family:'Dancing+Script', cursive; font-size:1.2rem; margin-top:15px; display:block; }
+
+/* Animations */
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(120vh) rotate(360deg);}}
+
+button {
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:#ff6b81;
+  color:blue;
+  font-size:1rem;
+  cursor:pointer;
+  margin-top:15px;
+  transition:transform 0.3s;
+}
+button:hover { transform:scale(1.1); }
+
+/* Balloons */
+.balloon {
+  position:absolute;
+  width:50px;
+  height:65px;
+  border-radius:50%;
+  cursor:pointer;
+}
+@keyframes float {0%{transform:translateY(0);}100%{transform:translateY(-120vh);}}
+
+.floating-heart {
+  position:absolute;
+  font-size:24px;
+  animation:heartFloat linear infinite;
+  opacity:0.8;
+}
+@keyframes heartFloat {
+  0% {transform:translateY(0) scale(0.7); opacity:0;}
+  10% {opacity:1;}
+  100% {transform:translateY(-120vh) scale(1); opacity:0;}
+}
+
+/* Confetti */
+.confetti {
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:red;
+  opacity:0.8;
+  transform:rotate(45deg);
+  animation:confettiFall linear infinite;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <!-- Step 1 -->
+  <div class="step" id="step1">
+    <h1>🎁 Surprise! 🎁</h1>
+    <h2>Happy 21st Birthday Mudasir 🌙</h2>
+    <p>Tap to open your gift!</p>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step" id="step2" style="display:none;">
+    <h1>💌 My Special Wish 💌</h1>
+    <p style="font-family:'Dancing Script', cursive; font-size:1.1rem;">
+      ON this special day i pray to ALLAH to bless uh with endless happines, health and success . May he keep uh guided on the straight path,protect uh from every harm and fill your life with love and barakah💖
+    </p>
+    <button id="ameenBtn"> Click Ameen 🙏</button>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step" id="step3" style="display:none;">
+    <h1>🎂 Cake Time! 🎂</h1>
+    <p>Make a wish & enjoy your 21st! Im grateful to ALLAH for bringing uh into my life 🎉🎈</p>
+    <div class="emoji">🍰🎊🎉💖</div>
+    <span class="from">— From Ayesha</span>
+  </div>
+</div>
+
+<div id="balloon-container"></div>
+<div id="heart-container"></div>
+<div id="confetti-container"></div>
+
+<!-- Background Music -->
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-summer.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let currentStep=1;
+const card=document.getElementById('card');
+const music=document.getElementById('music');
+
+// Step 1 tap
+card.addEventListener('click', ()=>{
+  if(currentStep===1){
+    music.play(); // Start music on first tap
+    document.getElementById('step1').style.display='none';
+    document.getElementById('step2').style.display='block';
+    currentStep++;
+  }
+});
+
+// Step 2 Ameen button
+document.getElementById('ameenBtn').addEventListener('click', ()=>{
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step3').style.display='block';
+  createConfetti();
+  createBalloons();
+});
+
+// Balloons
+const balloonContainer=document.getElementById('balloon-container');
+const colors=['#ff6b81','#ffd460','#6be1ff','#ff9f43','#9b59b6'];
+
+function createBalloons(){
+  for(let i=0;i<8;i++){
+    const balloon=document.createElement('div');
+    balloon.className='balloon';
+    balloon.style.background=colors[Math.floor(Math.random()*colors.length)];
+    balloon.style.left=Math.random()*90+'%';
+    balloon.style.bottom='-80px';
+    balloon.style.width=40+Math.random()*20+'px';
+    balloon.style.height=50+Math.random()*30+'px';
+    balloon.style.animation=`float ${6+Math.random()*4}s linear infinite`;
+    balloonContainer.appendChild(balloon);
+
+    balloon.addEventListener('click', ()=>{
+      balloon.remove();
+      createHeart(balloon.style.left, balloon.style.bottom);
+    });
+  }
+}
+
+// Hearts
+function createHeart(left,bottom){
+  const heart=document.createElement('div');
+  heart.className='floating-heart';
+  heart.style.left=left;
+  heart.style.bottom=bottom;
+  heart.innerText='💖';
+  heart.style.fontSize=20+Math.random()*20+'px';
+  heart.style.animationDuration=2+Math.random()*2+'s';
+  document.getElementById('heart-container').appendChild(heart);
+  setTimeout(()=>heart.remove(),4000);
+}
+
+// Confetti
+function createConfetti(){
+  const confettiContainer=document.getElementById('confetti-container');
+  for(let i=0;i<50;i++){
+    const confetti=document.createElement('div');
+    confetti.className='confetti';
+    confetti.style.left=Math.random()*100+'%';
+    confetti.style.background=colors[Math.floor(Math.random()*colors.length)];
+    confetti.style.width=5+Math.random()*5+'px';
+    confetti.style.height=5+Math.random()*5+'px';
+    confetti.style.animationDuration=2+Math.random()*2+'s';
+    confettiContainer.appendChild(confetti);
+    setTimeout(()=>confetti.remove(),4000);
+  }
+}
+</script>
+
+</body>
+</html>
